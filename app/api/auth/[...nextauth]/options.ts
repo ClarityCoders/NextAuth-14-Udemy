@@ -31,6 +31,7 @@ const options: NextAuthOptions = {
         return {
           ...profile,
           role: userRole,
+          id: profile.sub,
         };
       },
       clientId: process.env.GOOGLE_CLIENT_ID!,
