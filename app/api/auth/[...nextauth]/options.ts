@@ -9,7 +9,7 @@ const options: NextAuthOptions = {
         //console.log("Profile GitHub: ", profile);
         let userRole = "GitHub User";
         if (profile?.email == "jake@claritycoders.com") {
-          userRole = "admin";
+          userRole = "ADMIN";
         }
 
         return {
@@ -23,7 +23,7 @@ const options: NextAuthOptions = {
     GoogleProvider({
       profile(profile) {
         //console.log("Profile Google: ", profile);
-        let userRole = "Google User";
+        let userRole = "USER";
 
         return {
           ...profile,

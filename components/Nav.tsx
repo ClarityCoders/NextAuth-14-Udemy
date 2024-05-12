@@ -11,7 +11,7 @@ const Nav = async () => {
         <div>My Site</div>
         <div className="flex gap-10">
           <Link href="/">Home</Link>
-          {session?.user.role == "admin" && (
+          {session?.user.role == "ADMIN" && (
             <Link href="/CreateUser">Create User</Link>
           )}
           <Link href="/ClientMember">Client Member</Link>
