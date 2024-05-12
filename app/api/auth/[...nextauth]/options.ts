@@ -6,7 +6,7 @@ const options: NextAuthOptions = {
   providers: [
     GitHubProvider({
       profile(profile) {
-        console.log("Profile GitHub: ", profile);
+        //console.log("Profile GitHub: ", profile);
         let userRole = "GitHub User";
         if (profile?.email == "jake@claritycoders.com") {
           userRole = "admin";
@@ -22,7 +22,7 @@ const options: NextAuthOptions = {
     }),
     GoogleProvider({
       profile(profile) {
-        console.log("Profile Google: ", profile);
+        //console.log("Profile Google: ", profile);
         let userRole = "Google User";
 
         return {
