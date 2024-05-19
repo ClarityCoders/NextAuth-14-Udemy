@@ -1,6 +1,9 @@
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
 import { NextAuthOptions } from "next-auth";
+import { db } from "@/prisma/db";
+import bcrypt from "bcryptjs";
 
 const options: NextAuthOptions = {
   providers: [
@@ -33,6 +36,42 @@ const options: NextAuthOptions = {
       },
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
+    CredentialsProvider({
+      id: "password",
+      name: "Username and Password",
+      credentials: {
+        username: {
+          label: "Username",
+          type: "text",
+          placeholder: "Username...",
+        },
+        password: { label: "Password", type: "password" },
+      },
+      authorize: async (credentials) => {
+        if (!credentials) {
+          return null;
+        }
+
+        const user = await db.user.findUnique({
+          where: { username: credentials.username },
+        });
+
+        if (!user) {
+          return null;
+        }
+
+        const match = await bcrypt.compare(
+          credentials!.password,
+          user.password
+        );
+
+        if (match) {
+          return user;
+        }
+
+        return null;
+      },
     }),
   ],
   callbacks: {
